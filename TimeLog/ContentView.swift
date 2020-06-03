@@ -9,8 +9,17 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject private var keyboard = KeyboardResponder()
+    @State private var textFieldInput: String = ""
+
     var body: some View {
-        Text("Hello, World!")
+        VStack (alignment: .leading) {
+            Spacer()
+            Text(textFieldInput).animation(nil)
+            TextField("uMessage", text: $textFieldInput)
+        }.frame(maxWidth: .infinity)
+        .padding(.bottom, keyboard.currentHeight)
+            .edgesIgnoringSafeArea(keyboard.currentHeight > 0 ? .bottom : .init()).animation(.easeOut(duration: 0.16))
     }
 }
 

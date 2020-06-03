@@ -14,6 +14,7 @@
 		9224DEFE2486AFAC0013FABF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9224DEFD2486AFAC0013FABF /* Preview Assets.xcassets */; };
 		9224DF012486AFAC0013FABF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9224DEFF2486AFAC0013FABF /* LaunchScreen.storyboard */; };
 		9224DF0C2486AFAC0013FABF /* TimeLogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9224DF0B2486AFAC0013FABF /* TimeLogTests.swift */; };
+		9283C62F2486D5CD00766711 /* KeyboardResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9283C62E2486D5CD00766711 /* KeyboardResponder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		9224DF072486AFAC0013FABF /* TimeLogTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimeLogTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9224DF0B2486AFAC0013FABF /* TimeLogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLogTests.swift; sourceTree = "<group>"; };
 		9224DF0D2486AFAC0013FABF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9283C62E2486D5CD00766711 /* KeyboardResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardResponder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 				9224DEF42486AFAA0013FABF /* AppDelegate.swift */,
 				9224DEF62486AFAA0013FABF /* SceneDelegate.swift */,
 				9224DEF82486AFAA0013FABF /* ContentView.swift */,
+				9283C62E2486D5CD00766711 /* KeyboardResponder.swift */,
 				9224DEFA2486AFAB0013FABF /* Assets.xcassets */,
 				9224DEFF2486AFAC0013FABF /* LaunchScreen.storyboard */,
 				9224DF022486AFAC0013FABF /* Info.plist */,
@@ -209,6 +212,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9224DEF52486AFAA0013FABF /* AppDelegate.swift in Sources */,
+				9283C62F2486D5CD00766711 /* KeyboardResponder.swift in Sources */,
 				9224DEF72486AFAA0013FABF /* SceneDelegate.swift in Sources */,
 				9224DEF92486AFAA0013FABF /* ContentView.swift in Sources */,
 			);
