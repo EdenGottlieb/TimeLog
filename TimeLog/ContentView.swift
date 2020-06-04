@@ -29,11 +29,15 @@ struct ContentView: View {
         return formatter
     }()
     
-    func addEntry() {
-        let timeEntry = TimeEntry(time: self.birth, text: self.textFieldInput)
+    func addEntry () {
+        let timeEntry = TimeEntry(time: self.birth, text: self.textFieldInput.trimmingCharacters(in: .whitespaces))
         self.times.insert(timeEntry, at: self.times.firstIndex(where: {$0.time > timeEntry.time}) ?? self.times.endIndex)
         self.birth = Date()
         self.textFieldInput = ""
+    }
+    
+    func delete(at offsets: IndexSet) {
+        self.times.remove(atOffsets: offsets)
     }
 
     var body: some View {
@@ -49,6 +53,7 @@ struct ContentView: View {
         
         //return VStack (alignment: .center) {
 
+        let isActionDisabled = self.textFieldInput.trimmingCharacters(in: .whitespaces).isEmpty;
         return NavigationView {
             VStack {
                        Spacer()
@@ -58,15 +63,15 @@ struct ContentView: View {
                                    Text(entry.text)
                                    Text(dateFormatterPrint.string(from: entry.time))
                                }
-                           }
-                       }.navigationBarTitle("Entries")
+                        }.onDelete(perform: delete)
+                        }.navigationBarTitle("Entries")
                        DatePicker(selection: $birth, in: ...Date(), displayedComponents: .hourAndMinute) {
                            Text("Select time")
                        }.labelsHidden()
-                       TextField("uMessage", text: $textFieldInput, onCommit: self.addEntry)
+                TextField("uMessage", text: $textFieldInput, onCommit: !isActionDisabled ? self.addEntry : {})
                        Button(action: self.addEntry) {
                            Text("Add entry").frame(height: CGFloat(40)).padding(.bottom)
-                       }.disabled(self.textFieldInput.trimmingCharacters(in: .whitespaces).isEmpty)
+                       }.disabled(isActionDisabled)
                        
                    }
                    .padding(.bottom, keyboard.currentHeight)
