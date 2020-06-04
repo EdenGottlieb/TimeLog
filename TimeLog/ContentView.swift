@@ -31,12 +31,9 @@ struct ContentView: View {
     
     func addEntry() {
         let timeEntry = TimeEntry(time: self.birth, text: self.textFieldInput)
-        self.times.append(timeEntry)
         self.birth = Date()
         self.textFieldInput = ""
-        self.times.sort {
-            $0.time < $1.time
-        }
+        self.times.insert(timeEntry, at: self.times.firstIndex(where: {$0.time > timeEntry.time}) ?? 1 - 1)
     }
 
     var body: some View {
