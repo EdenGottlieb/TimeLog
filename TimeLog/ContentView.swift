@@ -8,16 +8,62 @@
 
 import SwiftUI
 
+struct TimeEntry: Identifiable {
+    var id: UUID = UUID()
+    var time: Date
+    var text: String
+}
+
 struct ContentView: View {
     @ObservedObject private var keyboard = KeyboardResponder()
     @State private var textFieldInput: String = ""
+    var strengths = ["Mild", "Medium", "Mature"]
+
+    @State private var selectedStrength = "hmm"
+    @State private var birth = Date()
+    @State private var times = [TimeEntry]()
+    
+    static let taskDateFormat: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        return formatter
+    }()
 
     var body: some View {
-        VStack (alignment: .leading) {
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "HH:mm"
+        //let calendar = Calendar.current
+        //let date = Date()
+        //let date1 = calendar.date(byAdding: .minute, value: -1, to: date)
+        //let date2 = calendar.date(byAdding: .minute, value: -2, to: date)
+        //let dateString = dateFormatterPrint.string(from: date)
+        //let date1String = dateFormatterPrint.string(from: date1!)
+        //let date2String = dateFormatterPrint.string(from: date2!)
+        
+        //return VStack (alignment: .center) {
+        return VStack {
             Spacer()
-            Text(textFieldInput).animation(nil)
+            ForEach(self.times) { entry in
+                HStack {
+                    Text(entry.text)
+                    Text(dateFormatterPrint.string(from: entry.time))
+                }
+            }
+            DatePicker(selection: $birth, in: ...Date(), displayedComponents: .hourAndMinute) {
+                Text("Select time")
+            }.labelsHidden()
             TextField("uMessage", text: $textFieldInput)
-        }.frame(maxWidth: .infinity)
+            Button(action: {
+                let timeEntry = TimeEntry(time: self.birth, text: self.textFieldInput)
+                self.times.append(timeEntry)
+                self.birth = Date()
+                self.textFieldInput = ""
+                
+            }) {
+                Text("Button title").frame(height: CGFloat(40)).padding(.bottom)
+            }
+            
+        }
         .padding(.bottom, keyboard.currentHeight)
             .edgesIgnoringSafeArea(keyboard.currentHeight > 0 ? .bottom : .init()).animation(.easeOut(duration: 0.16))
     }
