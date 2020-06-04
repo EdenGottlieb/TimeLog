@@ -28,6 +28,16 @@ struct ContentView: View {
         formatter.dateStyle = .long
         return formatter
     }()
+    
+    func addEntry() {
+        let timeEntry = TimeEntry(time: self.birth, text: self.textFieldInput)
+        self.times.append(timeEntry)
+        self.birth = Date()
+        self.textFieldInput = ""
+        self.times.sort {
+            $0.time < $1.time
+        }
+    }
 
     var body: some View {
         let dateFormatterPrint = DateFormatter()
@@ -41,6 +51,7 @@ struct ContentView: View {
         //let date2String = dateFormatterPrint.string(from: date2!)
         
         //return VStack (alignment: .center) {
+
         return VStack {
             Spacer()
             ForEach(self.times) { entry in
@@ -52,16 +63,10 @@ struct ContentView: View {
             DatePicker(selection: $birth, in: ...Date(), displayedComponents: .hourAndMinute) {
                 Text("Select time")
             }.labelsHidden()
-            TextField("uMessage", text: $textFieldInput)
-            Button(action: {
-                let timeEntry = TimeEntry(time: self.birth, text: self.textFieldInput)
-                self.times.append(timeEntry)
-                self.birth = Date()
-                self.textFieldInput = ""
-                
-            }) {
-                Text("Button title").frame(height: CGFloat(40)).padding(.bottom)
-            }
+            TextField("uMessage", text: $textFieldInput, onCommit: self.addEntry)
+            Button(action: self.addEntry) {
+                Text("Add entry").frame(height: CGFloat(40)).padding(.bottom)
+            }.disabled(self.textFieldInput.count == 0)
             
         }
         .padding(.bottom, keyboard.currentHeight)
