@@ -64,7 +64,7 @@ struct ContentView: View {
                                    Text(dateFormatterPrint.string(from: entry.time))
                                }
                         }.onDelete(perform: delete)
-                        }.navigationBarTitle("Entries")
+                       }.navigationBarItems(trailing: EditButton()).navigationBarTitle("Entries")
                        DatePicker(selection: $birth, in: ...Date(), displayedComponents: .hourAndMinute) {
                            Text("Select time")
                        }.labelsHidden()
