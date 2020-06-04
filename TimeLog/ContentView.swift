@@ -33,7 +33,7 @@ struct ContentView: View {
         let timeEntry = TimeEntry(time: self.birth, text: self.textFieldInput)
         self.birth = Date()
         self.textFieldInput = ""
-        self.times.insert(timeEntry, at: self.times.firstIndex(where: {$0.time > timeEntry.time}) ?? 1 - 1)
+        self.times.insert(timeEntry, at: self.times.firstIndex(where: {$0.time > timeEntry.time}) ?? self.times.endIndex)
     }
 
     var body: some View {
