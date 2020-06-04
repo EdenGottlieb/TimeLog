@@ -31,9 +31,9 @@ struct ContentView: View {
     
     func addEntry() {
         let timeEntry = TimeEntry(time: self.birth, text: self.textFieldInput)
+        self.times.insert(timeEntry, at: self.times.firstIndex(where: {$0.time > timeEntry.time}) ?? self.times.endIndex)
         self.birth = Date()
         self.textFieldInput = ""
-        self.times.insert(timeEntry, at: self.times.firstIndex(where: {$0.time > timeEntry.time}) ?? self.times.endIndex)
     }
 
     var body: some View {
@@ -49,26 +49,31 @@ struct ContentView: View {
         
         //return VStack (alignment: .center) {
 
-        return VStack {
-            Spacer()
-            ForEach(self.times) { entry in
-                HStack {
-                    Text(entry.text)
-                    Text(dateFormatterPrint.string(from: entry.time))
-                }
-            }
-            DatePicker(selection: $birth, in: ...Date(), displayedComponents: .hourAndMinute) {
-                Text("Select time")
-            }.labelsHidden()
-            TextField("uMessage", text: $textFieldInput, onCommit: self.addEntry)
-            Button(action: self.addEntry) {
-                Text("Add entry").frame(height: CGFloat(40)).padding(.bottom)
-            }.disabled(self.textFieldInput.count == 0)
-            
+        return NavigationView {
+            VStack {
+                       Spacer()
+                       List {
+                           ForEach(self.times) { entry in
+                               HStack {
+                                   Text(entry.text)
+                                   Text(dateFormatterPrint.string(from: entry.time))
+                               }
+                           }
+                       }.navigationBarTitle("Entries")
+                       DatePicker(selection: $birth, in: ...Date(), displayedComponents: .hourAndMinute) {
+                           Text("Select time")
+                       }.labelsHidden()
+                       TextField("uMessage", text: $textFieldInput, onCommit: self.addEntry)
+                       Button(action: self.addEntry) {
+                           Text("Add entry").frame(height: CGFloat(40)).padding(.bottom)
+                       }.disabled(self.textFieldInput.trimmingCharacters(in: .whitespaces).isEmpty)
+                       
+                   }
+                   .padding(.bottom, keyboard.currentHeight)
+                       .edgesIgnoringSafeArea(keyboard.currentHeight > 0 ? .bottom : .init()).animation(.easeOut(duration: 0.16))
+               }
         }
-        .padding(.bottom, keyboard.currentHeight)
-            .edgesIgnoringSafeArea(keyboard.currentHeight > 0 ? .bottom : .init()).animation(.easeOut(duration: 0.16))
-    }
+           
 }
 
 struct ContentView_Previews: PreviewProvider {
