@@ -8,31 +8,50 @@
 
 import SwiftUI
 
-struct TimeEntry: Identifiable {
+struct TimeEntry: Identifiable, Codable {
     var id: UUID = UUID()
     var time: Date
     var text: String
+}
+
+func loadEntries() -> Array<TimeEntry> {
+    if let data = UserDefaults.standard.data(forKey: "TimeEntries") {
+        if let decoded = try? JSONDecoder().decode([TimeEntry].self, from: data) {
+            return decoded
+        }
+    }
+    return [TimeEntry]()
 }
 
 struct ContentView: View {
     @ObservedObject private var keyboard = KeyboardResponder()
     @State private var entryText: String = ""
     @State private var entryDate = Date()
-    @State private var times = [TimeEntry]()
+    @State private var times = loadEntries()
     
+
     func addEntry () {
         let timeEntry = TimeEntry(time: self.entryDate, text: self.entryText.trimmingCharacters(in: .whitespaces))
         self.times.insert(timeEntry, at: self.times.firstIndex(where: {$0.time > timeEntry.time}) ?? self.times.endIndex)
         self.entryDate = Date()
         self.entryText = ""
+        save()
+    }
+    
+    func save() {
+        if let encoded = try? JSONEncoder().encode(times) {
+            UserDefaults.standard.set(encoded, forKey: "TimeEntries")
+        }
     }
     
     func delete(at offsets: IndexSet) {
         self.times.remove(atOffsets: offsets)
+        save()
     }
     
     func removeAll() {
         self.times.removeAll()
+        save()
     }
 
     var body: some View {
