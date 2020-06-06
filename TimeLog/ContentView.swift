@@ -57,9 +57,9 @@ struct ContentView: View {
                        DatePicker(selection: $entryDate, in: ...Date(), displayedComponents: .hourAndMinute) {
                            Text("Select time")
                        }.labelsHidden()
-                TextField("uMessage", text: $entryText, onCommit: !isActionDisabled ? self.addEntry : {})
+                TextField("Description", text: $entryText, onCommit: !isActionDisabled ? self.addEntry : {})
                        Button(action: self.addEntry) {
-                           Text("Add entry").frame(height: CGFloat(40)).padding(.bottom)
+                           Text("Add Entry").frame(height: CGFloat(40)).padding(.bottom)
                        }.disabled(isActionDisabled)
                        
                    }
