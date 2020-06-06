@@ -30,6 +30,10 @@ struct ContentView: View {
     func delete(at offsets: IndexSet) {
         self.times.remove(atOffsets: offsets)
     }
+    
+    func removeAll() {
+        self.times.removeAll()
+    }
 
     var body: some View {
         let dateFormatterPrint = DateFormatter()
@@ -47,7 +51,9 @@ struct ContentView: View {
                                 Text(dateFormatterPrint.string(from: entry.time))
                                }
                         }.onDelete(perform: delete)
-                       }.navigationBarItems(trailing: EditButton()).navigationBarTitle("Entries")
+                       }.navigationBarItems(leading: Button(action: self.removeAll) {
+                           Text("Clear")
+                       }, trailing: EditButton()).navigationBarTitle("Entries")
                        DatePicker(selection: $entryDate, in: ...Date(), displayedComponents: .hourAndMinute) {
                            Text("Select time")
                        }.labelsHidden()
