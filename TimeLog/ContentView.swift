@@ -43,7 +43,8 @@ struct ContentView: View {
                            ForEach(self.times) { entry in
                                HStack {
                                    Text(entry.text)
-                                   Text(dateFormatterPrint.string(from: entry.time))
+                                Spacer()
+                                Text(dateFormatterPrint.string(from: entry.time))
                                }
                         }.onDelete(perform: delete)
                        }.navigationBarItems(trailing: EditButton()).navigationBarTitle("Entries")
