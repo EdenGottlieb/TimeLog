@@ -40,6 +40,7 @@
 		9224DF0B2486AFAC0013FABF /* TimeLogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLogTests.swift; sourceTree = "<group>"; };
 		9224DF0D2486AFAC0013FABF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9283C62E2486D5CD00766711 /* KeyboardResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardResponder.swift; sourceTree = "<group>"; };
+		92D6E9F7248C638400991396 /* TimeLog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TimeLog.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +82,7 @@
 		9224DEF32486AFAA0013FABF /* TimeLog */ = {
 			isa = PBXGroup;
 			children = (
+				92D6E9F7248C638400991396 /* TimeLog.entitlements */,
 				9224DEF42486AFAA0013FABF /* AppDelegate.swift */,
 				9224DEF62486AFAA0013FABF /* SceneDelegate.swift */,
 				9224DEF82486AFAA0013FABF /* ContentView.swift */,
@@ -366,6 +368,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TimeLog/TimeLog.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"TimeLog/Preview Content\"";
 				DEVELOPMENT_TEAM = TK4892RAFB;
@@ -377,6 +380,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.TimeLogg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -386,6 +390,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TimeLog/TimeLog.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"TimeLog/Preview Content\"";
 				DEVELOPMENT_TEAM = TK4892RAFB;
@@ -397,6 +402,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.TimeLogg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -73,12 +73,18 @@ struct ContentView: View {
                        }.navigationBarItems(leading: Button(action: self.removeAll) {
                            Text("Clear")
                        }, trailing: EditButton()).navigationBarTitle("Entries")
+                #if os(iOS)
                        DatePicker(selection: $entryDate, in: ...Date(), displayedComponents: .hourAndMinute) {
                            Text("Select time")
-                       }.labelsHidden()
+                        }.labelsHidden()
+                #else
+                        DatePicker(selection: $entryDate, in: ...Date(), displayedComponents: .hourAndMinute) {
+                           Text("Select time")
+                        }.labelsHidden().pickerStyle(FieldDatePickerStyle)
+                #endif
                 TextField("Description", text: $entryText, onCommit: !isActionDisabled ? self.addEntry : {})
                        Button(action: self.addEntry) {
-                           Text("Add Entry").frame(height: CGFloat(40)).padding(.bottom)
+                        Text("Add Entry").frame(height: CGFloat(40)).padding(.bottom)
                        }.disabled(isActionDisabled)
                        
                    }
