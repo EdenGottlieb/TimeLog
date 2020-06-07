@@ -26,14 +26,23 @@ func loadEntries() -> Array<TimeEntry> {
 struct ContentView: View {
     @ObservedObject private var keyboard = KeyboardResponder()
     @State private var entryText: String = ""
+    @State private var time: String = ""
     @State private var entryDate = Date()
     @State private var times = loadEntries()
     
 
     func addEntry () {
-        let timeEntry = TimeEntry(time: self.entryDate, text: self.entryText.trimmingCharacters(in: .whitespaces))
+        // Aspire to replace with #if os(macOS) (not working)
+        #if targetEnvironment(macCatalyst)
+            // This is called on macOS for some reason.
+            let calculatedTime = getDateFormatter().date(from: self.time)
+        #else
+            let calculatedTime = self.entryDate
+        #endif
+        let timeEntry = TimeEntry(time: calculatedTime ?? Date() , text: self.entryText.trimmingCharacters(in: .whitespaces))
         self.times.insert(timeEntry, at: self.times.firstIndex(where: {$0.time > timeEntry.time}) ?? self.times.endIndex)
         self.entryDate = Date()
+        self.time = ""
         self.entryText = ""
         save()
     }
@@ -53,10 +62,15 @@ struct ContentView: View {
         self.times.removeAll()
         save()
     }
+    
+    func getDateFormatter() -> DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        return dateFormatter
+    }
 
     var body: some View {
-        let dateFormatterPrint = DateFormatter()
-        dateFormatterPrint.dateFormat = "HH:mm"
+        let dateFormatterPrint = getDateFormatter()
         let isActionDisabled = self.entryText.trimmingCharacters(in: .whitespaces).isEmpty;
         
         return NavigationView {
@@ -73,14 +87,12 @@ struct ContentView: View {
                        }.navigationBarItems(leading: Button(action: self.removeAll) {
                            Text("Clear")
                        }, trailing: EditButton()).navigationBarTitle("Entries")
-                #if os(iOS)
-                       DatePicker(selection: $entryDate, in: ...Date(), displayedComponents: .hourAndMinute) {
-                           Text("Select time")
-                        }.labelsHidden()
+                #if targetEnvironment(macCatalyst)
+                    TextField("Time", text: $time)
                 #else
                         DatePicker(selection: $entryDate, in: ...Date(), displayedComponents: .hourAndMinute) {
                            Text("Select time")
-                        }.labelsHidden().pickerStyle(FieldDatePickerStyle)
+                        }.labelsHidden()
                 #endif
                 TextField("Description", text: $entryText, onCommit: !isActionDisabled ? self.addEntry : {})
                        Button(action: self.addEntry) {
