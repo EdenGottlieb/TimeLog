@@ -90,7 +90,7 @@ struct ContentView: View {
                 #if targetEnvironment(macCatalyst)
                     TextField("Time", text: $time)
                 #else
-                        DatePicker(selection: $entryDate, in: ...Date(), displayedComponents: .hourAndMinute) {
+                        DatePicker(selection: $entryDate, displayedComponents: .hourAndMinute) {
                            Text("Select time")
                         }.labelsHidden()
                 #endif
