@@ -14,8 +14,15 @@ struct TimeEntry: Identifiable, Codable {
     var text: String
 }
 
+func getKey() -> String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy.MM.dd"
+    let saveKey = "TimeEntries-" + formatter.string(from: Date().addingTimeInterval((-5 * 60 * 60)))
+    return saveKey
+}
 func loadEntries() -> Array<TimeEntry> {
-    if let data = UserDefaults.standard.data(forKey: "TimeEntries") {
+    
+    if let data = UserDefaults.standard.data(forKey: getKey()) {
         if let decoded = try? JSONDecoder().decode([TimeEntry].self, from: data) {
             return decoded
         }
@@ -49,7 +56,7 @@ struct ContentView: View {
     
     func save() {
         if let encoded = try? JSONEncoder().encode(times) {
-            UserDefaults.standard.set(encoded, forKey: "TimeEntries")
+            UserDefaults.standard.set(encoded, forKey: getKey())
         }
     }
     
